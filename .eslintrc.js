@@ -16,5 +16,15 @@ module.exports = {
   ],
   rules: {
     'vue/no-multiple-template-root': 'off',
+    'no-param-reassign': [
+      'error',
+      {
+        props: true,
+        ignorePropertyModificationsFor: [
+          'state',
+          'response',
+        ],
+      },
+    ],
   },
 };
