@@ -4,6 +4,10 @@
       Trivia
     </h1>
     <div v-if="isPlaying">
+        <p class="text-xl">
+          Respuestas Correctas
+          <span class="font-bold">{{ correctAnswers }} / {{ AMOUNT_QUESTIONS }} </span>
+        </p>
       <TriviaQuestion class="mb-10" />
       <p class="text-2xl"> {{ currentIndex + 1 }} / {{ AMOUNT_QUESTIONS }} </p>
     </div>
@@ -34,6 +38,7 @@ const store = useStore();
 
 const difficulty = ref(null);
 const isPlaying = computed(() => store.state.trivia.isPlaying);
+const correctAnswers = computed(() => store.state.trivia.correctAnswersCount);
 
 async function startGame() {
   store.dispatch('updateQuestions', { amount: AMOUNT_QUESTIONS, difficulty: difficulty.value, type: 'multiple' });

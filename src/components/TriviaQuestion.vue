@@ -44,6 +44,9 @@ const answered = ref(false);
 const correctAnswer = ref(false);
 
 function processAnswer(correct) {
+  if (correct) {
+    store.dispatch('addCorrectAnswer');
+  }
   answered.value = true;
   correctAnswer.value = correct;
 }

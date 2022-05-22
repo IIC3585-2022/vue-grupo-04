@@ -5,6 +5,7 @@ const initialState = {
   questions: [],
   currentIndex: 0,
   isPlaying: false,
+  correctAnswersCount: 0,
 };
 
 const getters = {
@@ -30,6 +31,9 @@ const actions = {
   nextQuestion({ commit, state }) {
     commit('setCurrentIndex', state.currentIndex + 1);
   },
+  addCorrectAnswer({ commit, state }) {
+    commit('setCorrectAnswersCount', state.correctAnswersCount + 1);
+  },
 };
 
 const mutations = {
@@ -41,6 +45,9 @@ const mutations = {
   },
   setIsPlaying(state, payload) {
     state.isPlaying = payload;
+  },
+  setCorrectAnswersCount(state, payload) {
+    state.correctAnswersCount = payload;
   },
 };
 
