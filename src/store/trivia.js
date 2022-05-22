@@ -1,3 +1,4 @@
+import { shuffle } from 'lodash';
 import triviaApi from '../api/trivia';
 
 const initialState = {
@@ -5,7 +6,19 @@ const initialState = {
   currentIndex: 0,
   isPlaying: false,
 };
+
 const getters = {
+  currentQuestion(state) {
+    return state.questions[state.currentIndex];
+  },
+  currentAnswers(_state, triviaGetters) {
+    const incorrectAnswers = triviaGetters.currentQuestion.incorrectAnswers.map(
+      (answer) => ({ correct: false, value: answer }),
+    );
+    return shuffle(
+      [{ correct: true, value: triviaGetters.currentQuestion.correctAnswer }, ...incorrectAnswers],
+    );
+  },
 };
 
 const actions = {
