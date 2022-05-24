@@ -6,6 +6,7 @@ const initialState = {
   currentIndex: 0,
   isPlaying: false,
   correctAnswersCount: 0,
+  isGameOver: false,
 };
 
 const getters = {
@@ -30,9 +31,22 @@ const actions = {
   },
   nextQuestion({ commit, state }) {
     commit('setCurrentIndex', state.currentIndex + 1);
+    if (state.currentIndex === 10) {
+      commit('setIsGameOver', true);
+    }
   },
-  addCorrectAnswer({ commit, state }) {
-    commit('setCorrectAnswersCount', state.correctAnswersCount + 1);
+  addCorrectAnswer({ commit, state }, params) {
+    const { correct } = params;
+    if (correct) {
+      commit('setCorrectAnswersCount', state.correctAnswersCount + 1);
+    }
+  },
+  resetGame({ commit }) {
+    commit('setQuestions', []);
+    commit('setCurrentIndex', 0);
+    commit('setIsPlaying', false);
+    commit('setCorrectAnswersCount', 0);
+    commit('setIsGameOver', false);
   },
 };
 
@@ -48,6 +62,9 @@ const mutations = {
   },
   setCorrectAnswersCount(state, payload) {
     state.correctAnswersCount = payload;
+  },
+  setIsGameOver(state, payload) {
+    state.isGameOver = payload;
   },
 };
 
