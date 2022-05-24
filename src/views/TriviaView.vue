@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import TriviaCard from '../components/common/TriviaCard.vue';
 import TriviaQuestion from '../components/TriviaQuestion.vue';
@@ -57,6 +57,16 @@ const difficulty = ref(null);
 const isPlaying = computed(() => store.state.trivia.isPlaying);
 const correctAnswers = computed(() => store.state.trivia.correctAnswersCount);
 const isGameOver = computed(() => store.state.trivia.isGameOver);
+const maxCorrectAnswers = computed(() => store.state.trivia.maxCorrectAnswers);
+
+watch(
+  correctAnswers,
+  (newValue) => {
+    if (maxCorrectAnswers.value < newValue) {
+      store.dispatch('updateMaxCorrectAnswers', { newValue });
+    }
+  },
+);
 
 async function startGame() {
   store.dispatch('updateQuestions', { amount: AMOUNT_QUESTIONS, difficulty: difficulty.value, type: 'multiple' });
