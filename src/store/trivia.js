@@ -7,6 +7,10 @@ const initialState = {
   isPlaying: false,
   correctAnswersCount: 0,
   isGameOver: false,
+  maxCorrectAnswers: 0,
+  gamesPlayed: 0,
+  totalQuestionsAnswered: 0,
+  totalQuestionsAnsweredRight: 0,
 };
 
 const getters = {
@@ -31,7 +35,9 @@ const actions = {
   },
   nextQuestion({ commit, state }) {
     commit('setCurrentIndex', state.currentIndex + 1);
+    commit('setTotalQuestionsAnswered', state.totalQuestionsAnswered + 1);
     if (state.currentIndex === 10) {
+      commit('setGamesPlayed', state.gamesPlayed + 1);
       commit('setIsGameOver', true);
     }
   },
@@ -39,7 +45,12 @@ const actions = {
     const { correct } = params;
     if (correct) {
       commit('setCorrectAnswersCount', state.correctAnswersCount + 1);
+      commit('setTotalQuestionsAnsweredRight', state.totalQuestionsAnsweredRight + 1);
     }
+  },
+  updateMaxCorrectAnswers({ commit }, params) {
+    const { newValue } = params;
+    commit('setMaxCorrectAnswers', newValue);
   },
   resetGame({ commit }) {
     commit('setQuestions', []);
@@ -66,6 +77,19 @@ const mutations = {
   setIsGameOver(state, payload) {
     state.isGameOver = payload;
   },
+  setMaxCorrectAnswers(state, payload) {
+    state.maxCorrectAnswers = payload;
+  },
+  setTotalQuestionsAnswered(state, payload) {
+    state.totalQuestionsAnswered = payload;
+  },
+  setTotalQuestionsAnsweredRight(state, payload) {
+    state.totalQuestionsAnsweredRight = payload;
+  },
+  setGamesPlayed(state, payload) {
+    state.gamesPlayed = payload;
+  },
+
 };
 
 export default {

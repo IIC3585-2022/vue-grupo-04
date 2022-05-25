@@ -2,7 +2,7 @@
   <div class="text-center">
     <nav>
       <router-link to="/">Trivia</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/stats">Stats</router-link>
     </nav>
     <router-view/>
   </div>
